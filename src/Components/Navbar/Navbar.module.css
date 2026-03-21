@@ -1,0 +1,11 @@
+.btnCatg{
+    background-color:#F2F4F5 ;
+
+}
+.rotate {
+  transform: rotate(-8deg);
+  display: inline-block;
+}
+.TopNav{
+  background-color: #1B6392;
+}
