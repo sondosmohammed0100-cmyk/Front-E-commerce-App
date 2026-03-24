@@ -9,22 +9,21 @@ import Cart from './Components/Cart/Cart'
 import NotFound from './Components/NotFound/NotFound'
 import Categories from './Components/Categories/Categories'
 import Needhelp from './Components/Needhelp/Needhelp'
-import SignOut from './Components/SignOut/SignOut'
+import ProtectedRoutes from './Components/ProtectedRoutes/ProtectedRoutes'  
 import UserContextProvider from './Context/UserContext'
 import './App.css'
 let x = createBrowserRouter([
   {
     path: "", element: <Layout />,
     children: [
-      { index: true, element: <Home /> },
-      { path: "home", element: <Home /> },
-      { path: "products", element: <Products /> },
-      { path: "categories", element: <Categories /> },
+      { index: true, element:<ProtectedRoutes><Home /></ProtectedRoutes>  },
+      { path: "home", element:<ProtectedRoutes> <Home /></ProtectedRoutes> },
+      { path: "products", element:<ProtectedRoutes> <Products /></ProtectedRoutes> },
+      { path: "categories", element:<ProtectedRoutes> <Categories /> </ProtectedRoutes>},
       { path: "login", element: <Login /> },
       { path: "register", element: <Register /> },
-      { path: "cart", element: <Cart /> },
+      { path: "cart", element:<ProtectedRoutes> <Cart /></ProtectedRoutes> },
       { path: "needhelp", element: <Needhelp /> },
-      {path:"signout",element:<SignOut/>},
       { path: "*", element: <NotFound /> }
 
     ]

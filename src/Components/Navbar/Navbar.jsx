@@ -1,10 +1,42 @@
 import React, { useContext } from 'react'
 import Style from './Navbar.module.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { UserContext } from '../../Context/UserContext'
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 
 export default function Navbar() {
-  let { userLogin } = useContext(UserContext)
+ let navigate=useNavigate()
+  let { userLogin ,setuserLogin} = useContext(UserContext)
+  function signout(){
+    localStorage.removeItem("Usertoken")
+    setuserLogin(null)
+    navigate('/login')
+
+  }
+    const [Categories, setCategory] = useState([])
+
+  function getCategories() {
+    const token = localStorage.getItem("Usertoken");
+
+    axios.get('http://localhost:3000/api/categories', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then((res) => {
+        setCategory(res.data.category)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  useEffect(() => {
+    getCategories()
+  }, [])
+
   return (
     <>
       <div className="bg-black text-white p-3 position-relative">
@@ -116,7 +148,7 @@ export default function Navbar() {
             <div className="col-3 d-flex ms-auto align-items-center  justify-content-end  fs-3 gap-3">
               <Link className='text-white' to="Cart"><i className="fa-solid fa-cart-arrow-down"></i></Link>
               <Link className='text-white' to="needhelp"><i className="fa-regular fa-heart"></i></Link>
-              {userLogin!=null?<Link className='text-white' to="signout"><i className="fa-solid fa-right-from-bracket"></i></Link> : <Link className='text-white' to="Register"><i className="fa-regular fa-user"></i></Link>}
+              {userLogin!=null?<span onClick={signout} className={`text-white ${Style.pointer}`} ><i className="fa-solid fa-right-from-bracket cursor-pointer"></i></span> : <Link className='text-white' to="Register"><i className="fa-regular fa-user"></i></Link>}
               
 
             </div>
@@ -131,7 +163,7 @@ export default function Navbar() {
           <div className="container">
 
             {/* Category Dropdown */}
-            <div className="btn-group">
+            {/* <div className="btn-group">
               <button
                 type="button"
                 className={`btn dropdown-toggle ${Style.btnCatg}`}
@@ -145,7 +177,26 @@ export default function Navbar() {
                 <li><Link className="dropdown-item" to="">Smart Phone</Link></li>
                 <li><Link className="dropdown-item" to="">HeadPhone</Link></li>
               </ul>
-            </div>
+            </div> */}
+            <div className="btn-group">
+      <button
+        type="button"
+        className="btn dropdown-toggle"
+        data-bs-toggle="dropdown"
+      >
+        All Category
+      </button>
+
+      <ul className="dropdown-menu">
+        {Categories.map((cat) => (
+          <li key={cat._id}>
+            <Link className="dropdown-item" to={`/category/${cat._id}`}>
+              {cat.name}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
 
 
             <button
