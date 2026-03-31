@@ -1,9 +1,11 @@
+//context consist of two things (Variable and function)
 import { createContext, useEffect, useState } from "react";
 
 export let UserContext = createContext();
 
 export default function UserContextProvider(props) {
   let [userLogin, setuserLogin] = useState(null);
+  
   useEffect(()=>{
 
     if(localStorage.getItem("Usertoken")){

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import style from './Register.module.css'
+//This is for form handling and getting values from form
 import { useFormik } from 'formik'
 //This is for validation on form
 import * as Yup from 'yup'
@@ -10,10 +11,15 @@ import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 
 export default function Register() {
+
   let navigate = useNavigate()
+  
   const [Apierror, setApiError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+
+//custom function for calling api
   async function handelResgister(values) {
+//this is for spinner on the button to spin untill the axios get data from DB
     setIsLoading(true)
     try{
       let {data}=await axios.post("http://localhost:3000/api/auth/register", values)
@@ -34,6 +40,7 @@ export default function Register() {
     setIsLoading(false) 
   }
   }
+//this for handling validation
   let validationSchema = Yup.object({
     name: Yup.string().required("Name is required").min(3, "Name must be at least 3 characters").max(15, "Name must be less than 15 characters"),
     email: Yup.string().required("Email is required").email("Invalid email format"),
@@ -41,7 +48,7 @@ export default function Register() {
     confirmPassword: Yup.string().required("Confirm Password is required").oneOf([Yup.ref('password'), null], "Passwords must match"),
     terms: Yup.boolean().oneOf([true], "You must accept the terms and conditions")  
   });
-
+//for collecting data from input form
   let formik = useFormik({
     initialValues: {
       name: "",
@@ -54,13 +61,16 @@ export default function Register() {
     onSubmit: handelResgister
   })
 
+  //view
   return <>
     <div className="container d-flex justify-content-center align-items-center min-vh-100">
       <div className="card p-3 shadow">
         
         <div className="card-body">
           <h3 className="text-center mb-3">Create Your Account</h3>
+
           <form onSubmit={formik.handleSubmit}>
+
               {Apierror ? <div className='alert alert-danger'>{Apierror}</div> : null}  
             <div className="mb-3 text-start">
               <label className="form-label">Name</label>

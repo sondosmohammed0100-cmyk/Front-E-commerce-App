@@ -7,8 +7,12 @@ import axios from "axios";
 
 
 export default function Navbar() {
+
  let navigate=useNavigate()
+//usecontext return an object that has userLogin & setuserLogin
   let { userLogin ,setuserLogin} = useContext(UserContext)
+
+
   function signout(){
     localStorage.removeItem("Usertoken")
     setuserLogin(null)
@@ -132,7 +136,8 @@ export default function Navbar() {
               <i className="fa-regular fa-circle-dot"></i>
               <h3 className="ms-2 m-3">CLICON</h3>
             </div>
-            {userLogin != null ? <div className="col-6 d-none d-lg-block">
+            {userLogin != null ? 
+            <div className="col-6 d-none d-lg-block">
               <form className="input-group w-100">
                 <input
                   className="form-control py-2 px-3"
@@ -148,7 +153,10 @@ export default function Navbar() {
             <div className="col-3 d-flex ms-auto align-items-center  justify-content-end  fs-3 gap-3">
               <Link className='text-white' to="Cart"><i className="fa-solid fa-cart-arrow-down"></i></Link>
               <Link className='text-white' to="needhelp"><i className="fa-regular fa-heart"></i></Link>
-              {userLogin!=null?<span onClick={signout} className={`text-white ${Style.pointer}`} ><i className="fa-solid fa-right-from-bracket cursor-pointer"></i></span> : <Link className='text-white' to="Register"><i className="fa-regular fa-user"></i></Link>}
+
+              {userLogin!=null?
+              
+              <span onClick={signout} className={`text-white ${Style.pointer}`} ><i className="fa-solid fa-right-from-bracket cursor-pointer"></i></span> : <Link className='text-white' to="Register"><i className="fa-regular fa-user"></i></Link>}
               
 
             </div>
@@ -161,23 +169,6 @@ export default function Navbar() {
 
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
           <div className="container">
-
-            {/* Category Dropdown */}
-            {/* <div className="btn-group">
-              <button
-                type="button"
-                className={`btn dropdown-toggle ${Style.btnCatg}`}
-                data-bs-toggle="dropdown">
-                All Category
-              </button>
-
-              <ul className="dropdown-menu">
-                <li><Link className="dropdown-item" to="">Computer & Laptop</Link></li>
-                <li><Link className="dropdown-item" to="">Computer & Accessories</Link></li>
-                <li><Link className="dropdown-item" to="">Smart Phone</Link></li>
-                <li><Link className="dropdown-item" to="">HeadPhone</Link></li>
-              </ul>
-            </div> */}
             <div className="btn-group">
       <button
         type="button"

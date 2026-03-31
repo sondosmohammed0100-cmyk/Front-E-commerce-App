@@ -10,6 +10,7 @@ import axios from 'axios'
 
 import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../../Context/UserContext'
+import api from '../../api/axios'
 
 
 
@@ -20,10 +21,13 @@ export default function Login() {
   let navigate = useNavigate()
   const [Apierror, setApiError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  
   async function handellogin(values) {
+
     setIsLoading(true)
     try {
-      let { data } = await axios.post("http://localhost:3000/api/auth/login", values)
+    //console.log(values)
+      let { data } = await api.post("auth/login", values)
       console.log(data);
       // setIsLoading(false)
       if (data.msg === "success") {

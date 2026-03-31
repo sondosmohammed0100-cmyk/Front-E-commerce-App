@@ -12,7 +12,7 @@ export default function HeroSection() {
           <div className="p-4 bg-light rounded h-100 d-flex align-items-center justify-content-between">
             
             <div>
-              <small className="text-muted">THE BEST PLACE TO PLAY</small>
+              <p className="text-muted">THE BEST PLACE TO PLAY</p>
               <h2>Xbox Consoles</h2>
               <p>
                 Save up to 50% on select Xbox games. Get 3 months of PC Game Pass.

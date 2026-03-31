@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Layout from './Components/Layout/Layout'
 import Home from './Components/Home/Home'
@@ -12,6 +11,10 @@ import Needhelp from './Components/Needhelp/Needhelp'
 import ProtectedRoutes from './Components/ProtectedRoutes/ProtectedRoutes'  
 import UserContextProvider from './Context/UserContext'
 import './App.css'
+
+import ProductDetails from './Components/ProductDetails/ProductDetails'
+
+
 let x = createBrowserRouter([
   {
     path: "", element: <Layout />,
@@ -20,6 +23,7 @@ let x = createBrowserRouter([
       { path: "home", element:<ProtectedRoutes> <Home /></ProtectedRoutes> },
       { path: "products", element:<ProtectedRoutes> <Products /></ProtectedRoutes> },
       { path: "categories", element:<ProtectedRoutes> <Categories /> </ProtectedRoutes>},
+      {path:  "productdetails/:id",element:<ProtectedRoutes> <ProductDetails/> </ProtectedRoutes>},
       { path: "login", element: <Login /> },
       { path: "register", element: <Register /> },
       { path: "cart", element:<ProtectedRoutes> <Cart /></ProtectedRoutes> },
@@ -29,9 +33,16 @@ let x = createBrowserRouter([
     ]
   }])
 function App() {
- return <UserContextProvider>
-    <RouterProvider router={x}></RouterProvider>
-  </UserContextProvider>
+
+ return( 
+
+        <UserContextProvider>
+
+          <RouterProvider router={x}></RouterProvider>
+
+        </UserContextProvider>
+
+  )
 }
 
 export default App

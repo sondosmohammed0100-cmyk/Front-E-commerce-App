@@ -1,22 +1,22 @@
-
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import  { useEffect, useState } from 'react'
+import api from '../../api/axios'
 import image1 from '../../assets/img1.png'
 export default function BestDeals() {
   const [products, setProducts] = useState([])
 
   function getProducts() {
     const token = localStorage.getItem("Usertoken");
-
-    axios.get('http://localhost:3000/api/products', {
+// use the api instead of axios ('http://localhost:3000/api/products')
+    api.get('products', {
       headers: {
         Authorization: `Bearer ${token}`
       }
-    })
-      .then((res) => {
+
+    }).then((res) => {
+      console.log(res.data.Products)
         setProducts(res.data.Products)
-      })
-      .catch((err) => {
+
+      }).catch((err) => {
         console.log(err)
       })
   }
@@ -67,11 +67,12 @@ export default function BestDeals() {
         
         <div className="col-lg-9">
           <div className="row">
-
-            {products.map((product) => (
+{/* I make spinner to display untile the fetch data from BD */}
+            {products.length>0?    products.map((product) => (
               <div key={product._id} className="col-6 col-md-4 col-lg-3 mb-3">
 
                 <div className="card h-100 text-center p-2">
+                  <h3 className='text-primary'>{product.categoryId.name}</h3>
 
                   <img
                     src={`http://localhost:3000${product.image[0]}`}
@@ -93,7 +94,7 @@ export default function BestDeals() {
                 </div>
 
               </div>
-            ))}
+            )):<div className="lds-hourglass mx-auto"></div>}
 
           </div>
         </div>
